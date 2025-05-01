@@ -3,8 +3,9 @@ import numpy as np
 class disk ():
     def __init__(self):
         self.position=np.zeros(2)
-        self.speed=np.zeros(2)
+        self.speed=0 # Aqui modifique esta parte solamente para que la velocidad sea un escalar, creo que nos conviene más.
         self.radious=1
+        self.angle=0 # Agregue un nuevo parametro, que es el angulo de inclinaacion del vector velocidad respecto a la base del cuadrado.
 
 
 
