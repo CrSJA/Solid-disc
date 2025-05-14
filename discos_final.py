@@ -4,7 +4,7 @@ import numpy as np
 #en cuenta que solo fueran 4 discos, pero la ultima parte dice que se tiene
 #que variar con diferentes círculos
 
-from classdisc_final import disk
+from classdisc import disk
 
 def generar_discos(n, radio):
     discos = []

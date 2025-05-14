@@ -4,7 +4,7 @@ import numpy as np
 
 from discos_final import generar_discos
 from velocities_final import detectar_colisiones_y_actualizar
-from classdisc_final import disk
+from classdisc import disk
 
 cantidad_discos = 50
 radio_disco = 0.05
