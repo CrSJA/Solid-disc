@@ -1,10 +1,11 @@
 import numpy as np
 
 class disk ():
-    def __init__(self,positionx=0.5,positiony=0.5,speedx=0,speedy=0,radious=0.3):
-        self.position=np.array[positionx,positiony]
-        self.velocity=np.array[speedx,speedy]
+    def __init__(self,positionx=0.5,positiony=0.5,speedx=0,speedy=0,radious=0.3,mass=1):
+        self.position=np.array([positionx,positiony])
+        self.velocity=np.array([speedx,speedy])
         self.radious=radious
+        self.mass=mass #Agregue masa al disco y no puede ser 0 para el calculo de velocidades.
 
     @property
     def polar_velocity(self):
@@ -13,10 +14,9 @@ class disk ():
         return (mag,angle_radians) # esto es imutable, si quiere cambiar la propiedad dele una tupla nueva
 
     @polar_velocity.setter
-    def polar_velocity(self,polar_vector):
+    def polar_velocity(self,polar_vector): #Le cambie el nombre porque se repetía con position.
         self.velocity[0]=polar_vector[0]*np.cos(polar_vector[1])
         self.velocity[1]=polar_vector[0]*np.sin(polar_vector[1])
-
 
     @property
     def polar_position(self):
@@ -25,7 +25,7 @@ class disk ():
         return (mag,angle_radians) # esto es imutable, si quiere cambiar la propiedad dele una tupla nueva
 
     @polar_position.setter
-    def polar_velocity(self,polar_vector):
+    def polar_position(self,polar_vector):
         self.position[0]=polar_vector[0]*np.cos(polar_vector[1])
         self.position[1]=polar_vector[0]*np.sin(polar_vector[1]) # de ser posible no usen hagan todo vectorial y eviten usar las propiedades polares si es posible
 
