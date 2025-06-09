@@ -11,7 +11,7 @@ for i in range(4):
     vx, vy = np.random.uniform(-0.5, 0.5, size=2)
 
     # Crear el disco
-    disco = disk(positionx=x, positiony=y, speedx=vx, speedy=vy, radious=0.1)
+    disco = disk(positionx=x, positiony=y, speedx=vx, speedy=vy, radious=0.1, mass=1) #Agregue masa a la función.
     discos.append(disco)
 
     # Imprimir velocidad de cada disco
