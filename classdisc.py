@@ -61,5 +61,39 @@ class disk ():
         else: 
             return np.infty
         
+ 
+    def time_to_wall_collision_only(self, box_bounds):
+        """
+        Returns list of times until collision with each wall (or np.inf if no collision).
+        Order: [left, right, bottom, top]
+        box_bounds shoul be adic 
+        {
+        'xmin' = a
+        'xmax' = b
+        'ymin' = c
+        'ymax' = d
+        }
+        """
+        pos=self.polar_position
+        vel=self.velocity
+        radius=self.radious
 
+        times = [np.inf] * 4  # Initialize all as inf
 
+        # Left wall
+        if vel[0] < 0:
+            times[0] = (box_bounds['xmin'] + radius - pos[0]) / vel[0]
+   
+        # Right wall
+        if vel[0] > 0:
+            times[1] = (box_bounds['xmax'] - radius - pos[0]) / vel[0]
+   
+        # Bottom wall
+        if vel[1] < 0:
+            times[2] = (box_bounds['ymin'] + radius - pos[1]) / vel[1]
+   
+        # Top wall
+        if vel[1] > 0:
+            times[3] = (box_bounds['ymax'] - radius - pos[1]) / vel[1]
+
+        return np.array(times)
