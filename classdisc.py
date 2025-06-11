@@ -96,4 +96,4 @@ class disk ():
         if vel[1] > 0:
             times[3] = (box_bounds['ymax'] - radius - pos[1]) / vel[1]
 
-        return np.array(times)
+        return np.min(np.array(times))
