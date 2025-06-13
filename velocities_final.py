@@ -4,7 +4,7 @@
 #entonces se cambió la mayoría del código.
 
 import numpy as np
-from classdisc_final import disk
+from classdisc import disk
 def newVelocityVector(d1, d2):
     """Colisión elástica físicamente correcta entre dos discos"""
     delta_pos = d1.position - d2.position
