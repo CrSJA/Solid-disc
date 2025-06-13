@@ -1,99 +1,94 @@
 import numpy as np
 
-class disk ():
+class disk:
 
-    def __init__(self,positionx=0.5,positiony=0.5,speedx=0,speedy=0,radious=0.3,mass=1):
-        self.position=np.array([positionx,positiony])
-        self.velocity=np.array([speedx,speedy])
-        self.radious=radious
-        self.mass=mass #Agregue masa al disco y no puede ser 0 para el calculo de velocidades.
+#Se agrega el dtype
+    def __init__(self, positionx=0.5, positiony=0.5, speedx=0, speedy=0, radious=0.3, mass=1):
+        self.position = np.array([positionx, positiony], dtype=float)
+        self.velocity = np.array([speedx, speedy], dtype=float)
+        self.radious = radious
+        self.mass = mass
 
+#Se agrega el if mag
     @property
     def polar_velocity(self):
-        mag=np.linalg.norm(self.velocity)
-        angle_radians=np.arccos(self.velocity[0]/mag)
-        return (mag,angle_radians) # esto es imutable, si quiere cambiar la propiedad dele una tupla nueva
+        mag = np.linalg.norm(self.velocity)
+        if mag == 0:
+            return (0, 0)
+        angle_radians = np.arccos(self.velocity[0] / mag)
+        return (mag, angle_radians)
 
     @polar_velocity.setter
-    def polar_velocity(self,polar_vector): #Le cambie el nombre porque se repetía con position.
-        self.velocity[0]=polar_vector[0]*np.cos(polar_vector[1])
-        self.velocity[1]=polar_vector[0]*np.sin(polar_vector[1])
+    def polar_velocity(self, polar_vector):
+        self.velocity[0] = polar_vector[0] * np.cos(polar_vector[1])
+        self.velocity[1] = polar_vector[0] * np.sin(polar_vector[1])
 
-    @property
-    def polar_position(self):
-        mag=np.linalg.norm(self.position)
-        angle_radians=np.arccos(self.position[0]/mag)
-        return (mag,angle_radians) # esto es imutable, si quiere cambiar la propiedad dele una tupla nueva
+#Aquí se quitó una parte del código que se llama def polar_position(self)
+#Aquí se quitó una parte del código que se llama def polar_position.setter
 
-    @polar_position.setter
-    def polar_position(self,polar_vector):
-        self.position[0]=polar_vector[0]*np.cos(polar_vector[1])
-        self.position[1]=polar_vector[0]*np.sin(polar_vector[1]) # de ser posible no usen hagan todo vectorial y eviten usar las propiedades polares si es posible
+    def is_colliding_with(self, other):
+        distance_squared = np.sum((self.position - other.position) ** 2)
+        radii_sum_squared = (self.radious + other.radious) ** 2
+        return distance_squared <= radii_sum_squared
 
-    def is_coliding_whit_another(self,another): # comprueva si hay colisiones con otro circulo
-        distance_squared = np.sum((self.position-another.position)**2)
-        radious_sum_squared = (self.radious + another.radious)**2
-        return distance_squared<=radious_sum_squared
+#Aquí se modifica la parte de time_until_colision_with_another
+
+    def verificar_colision_con_pared(self, xlim=(0, 1), ylim=(0, 1)):
+        if self.position[0] - self.radious <= xlim[0] or self.position[0] + self.radious >= xlim[1]:
+            self.velocity[0] *= -1
+            self.position[0] = np.clip(self.position[0], xlim[0] + self.radious, xlim[1] - self.radious)
+        if self.position[1] - self.radious <= ylim[0] or self.position[1] + self.radious >= ylim[1]:
+            self.velocity[1] *= -1
+            self.position[1] = np.clip(self.position[1], ylim[0] + self.radious, ylim[1] - self.radious)
+
+#Agrega la función de mover
+    def mover(self, dt):
+        self.position += self.velocity * dt
     
-    def time_until_colision_with_another(self,another): 
-        dr=self.position-another.position
-        dv=self.velocity-another.velocity
-        R=self.radious+another.radious
+import numpy as np
 
-        a=np.dot(dv,dv)
-        b=np.dot(dr,dv)
-        c=np.dot(dr,dr)
+class disk:
 
-        discriminant=b**2-4*a*c
+#Se agrega el dtype
+    def __init__(self, positionx=0.5, positiony=0.5, speedx=0, speedy=0, radious=0.3, mass=1):
+        self.position = np.array([positionx, positiony], dtype=float)
+        self.velocity = np.array([speedx, speedy], dtype=float)
+        self.radious = radious
+        self.mass = mass
 
-        if discriminant < 0 or discriminant == 0:
-            return np.infty
-        
-        sqrt_dsicriminant=np.sqrt(discriminant)
+#Se agrega el if mag
+    @property
+    def polar_velocity(self):
+        mag = np.linalg.norm(self.velocity)
+        if mag == 0:
+            return (0, 0)
+        angle_radians = np.arccos(self.velocity[0] / mag)
+        return (mag, angle_radians)
 
-        t1 = (-b -sqrt_dsicriminant) / (2*a)
-        t2 = (-b + sqrt_dsicriminant) / (2*a)
+    @polar_velocity.setter
+    def polar_velocity(self, polar_vector):
+        self.velocity[0] = polar_vector[0] * np.cos(polar_vector[1])
+        self.velocity[1] = polar_vector[0] * np.sin(polar_vector[1])
 
-        if t1 > 1e-10:
-            return t1
-        elif t2 > 1e-10:
-            return t2
-        else: 
-            return np.infty
-        
- 
-    def time_to_wall_collision_only(self, box_bounds):
-        """
-        Returns list of times until collision with each wall (or np.inf if no collision).
-        Order: [left, right, bottom, top]
-        box_bounds shoul be adic 
-        {
-        'xmin' = a
-        'xmax' = b
-        'ymin' = c
-        'ymax' = d
-        }
-        """
-        pos=self.polar_position
-        vel=self.velocity
-        radius=self.radious
+#Aquí se quitó una parte del código que se llama def polar_position(self)
+#Aquí se quitó una parte del código que se llama def polar_position.setter
 
-        times = [np.inf] * 4  # Initialize all as inf
+    def is_colliding_with(self, other):
+        distance_squared = np.sum((self.position - other.position) ** 2)
+        radii_sum_squared = (self.radious + other.radious) ** 2
+        return distance_squared <= radii_sum_squared
 
-        # Left wall
-        if vel[0] < 0:
-            times[0] = (box_bounds['xmin'] + radius - pos[0]) / vel[0]
-   
-        # Right wall
-        if vel[0] > 0:
-            times[1] = (box_bounds['xmax'] - radius - pos[0]) / vel[0]
-   
-        # Bottom wall
-        if vel[1] < 0:
-            times[2] = (box_bounds['ymin'] + radius - pos[1]) / vel[1]
-   
-        # Top wall
-        if vel[1] > 0:
-            times[3] = (box_bounds['ymax'] - radius - pos[1]) / vel[1]
+#Aquí se modifica la parte de time_until_colision_with_another
 
-        return np.min(np.array(times))
+    def verificar_colision_con_pared(self, xlim=(0, 1), ylim=(0, 1)):
+        if self.position[0] - self.radious <= xlim[0] or self.position[0] + self.radious >= xlim[1]:
+            self.velocity[0] *= -1
+            self.position[0] = np.clip(self.position[0], xlim[0] + self.radious, xlim[1] - self.radious)
+        if self.position[1] - self.radious <= ylim[0] or self.position[1] + self.radious >= ylim[1]:
+            self.velocity[1] *= -1
+            self.position[1] = np.clip(self.position[1], ylim[0] + self.radious, ylim[1] - self.radious)
+
+#Agrega la función de mover
+    def mover(self, dt):
+        self.position += self.velocity * dt
+
