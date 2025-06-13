@@ -91,3 +91,4 @@ class disk:
 #Agrega la función de mover
     def mover(self, dt):
         self.position += self.velocity * dt
+
