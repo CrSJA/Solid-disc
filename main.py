@@ -6,7 +6,21 @@ from discos_final import generar_discos
 from velocities_final import detectar_colisiones_y_actualizar
 from classdisc import disk
 
+"""
+SIMULACIÓN DE DINÁMICA DE DISCOS CON COLISIONES
 
+Este script principal ejecuta una simulación de:
+- Movimiento de discos en un espacio confinado
+- Colisiones elásticas entre discos
+- Colisiones con las paredes del contenedor
+- Visualización animada con histograma en tiempo real
+
+Los parámetros configurables son:
+- cantidad_discos: Número de discos en la simulación
+- radio_disco: Radio de cada disco
+- dt: Paso de tiempo para la simulación
+- frames: Número de frames en la animación
+"""
 
 cantidad_discos = 50
 radio_disco = 0.05
@@ -28,6 +42,9 @@ ax_hist.set_xlabel("X Position")
 ax_hist.set_ylabel("Count")
 
 def mostrar_histograma():
+    """
+    Muestra un histograma final de las posiciones en X después de la simulación.
+    """
     x_positions = [d.position[0] for d in discos]
     plt.figure()
     plt.hist(x_positions, bins=20, color='skyblue', edgecolor='black')
@@ -45,6 +62,19 @@ for p in patches:
     ax_sim.add_patch(p)
 
 def actualizar(frame):
+    """
+    Actualiza el estado de la simulación para cada frame.
+
+    Pasos:
+    1. Mueve todos los discos según su velocidad
+    2. Verifica colisiones con las paredes
+    3. Detecta y procesa colisiones entre discos
+    4. Actualiza las posiciones visuales
+    5. Actualiza el histograma cada 10 frames
+
+    Args:
+        frame (int): Número del frame actual
+    """
     for d in discos:
         d.mover(dt)
         d.verificar_colision_con_pared()
