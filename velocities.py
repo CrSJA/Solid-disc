@@ -5,8 +5,16 @@
 
 import numpy as np
 from classdisc import disk
+
 def newVelocityVector(d1, d2):
     """Colisión elástica físicamente correcta entre dos discos"""
+    """
+    Calcula nuevas velocidades tras colisión elástica entre dos discos.
+    
+    Args:
+        d1 (disk): Primer disco en colisión
+        d2 (disk): Segundo disco en colisión
+    """
     delta_pos = d1.position - d2.position
     distancia = np.linalg.norm(delta_pos)
 
@@ -27,6 +35,16 @@ def newVelocityVector(d1, d2):
     d2.velocity += (impulso * d1.mass) * normal
 
 def separar_discos(d1, d2, margen=1e-3):
+    """
+    Separa físicamente dos discos tras colisión para evitar superposición.
+
+    Args:
+        d1 (disk): Primer disco a separar
+        d2 (disk): Segundo disco a separar
+        margen (float): Distancia adicional de seguridad (default: 1e-3)
+    """
+
+
     delta = d1.position - d2.position
     distancia = np.linalg.norm(delta)
     min_distancia = d1.radious + d2.radious + margen
@@ -42,6 +60,12 @@ def separar_discos(d1, d2, margen=1e-3):
     d2.position -= direccion * desplazamiento
 
 def detectar_colisiones_y_actualizar(discos):
+    """
+    Detecta colisiones entre todos los discos y actualiza sus estados.
+
+    Args:
+        discos (list): Lista de objetos disk en la simulación
+    """
     n = len(discos)
     for i in range(n):
         for j in range(i + 1, n):

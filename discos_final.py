@@ -7,6 +7,16 @@ import numpy as np
 from classdisc import disk
 
 def generar_discos(n, radio):
+    """
+    Genera múltiples discos con posiciones y velocidades aleatorias.
+
+    Args:
+        n (int): Número de discos a generar
+        radio (float): Radio que tendrán todos los discos
+
+    Returns:
+        list: Lista de objetos disk generados
+    """
     discos = []
     for _ in range(n):
         # Posiciones aleatorias dentro del área segura (sin salirse de la caja)
