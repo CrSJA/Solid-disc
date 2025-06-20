@@ -3,7 +3,7 @@ import matplotlib.animation as animation
 import numpy as np
 
 from discos_final import generar_discos
-from velocities_final import detectar_colisiones_y_actualizar
+from velocities import detectar_colisiones_y_actualizar
 from classdisc import disk
 
 cantidad_discos = 50
