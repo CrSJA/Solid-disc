@@ -1,3 +1,4 @@
+
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
@@ -27,12 +28,10 @@ dt = 0.01
 
 discos = generar_discos(n=cantidad_discos, radio=radio_disco)
 
-
 fig, ax = plt.subplots()
 ax.set_xlim(0, 1)
 ax.set_ylim(0, 1)
 ax.set_aspect('equal')
-
 
 colors = [np.random.rand(3,) for _ in discos]
 patches = [plt.Circle((d.position[0], d.position[1]), d.radious, color=colors[i]) for i, d in enumerate(discos)]
