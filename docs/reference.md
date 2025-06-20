@@ -15,7 +15,7 @@ Implementa la clase `disk` que representa cada disco en la simulación.
 ### velocities_final.py
 Contiene las funciones para manejar colisiones entre discos.
 
-::: velocities_final
+::: velocities
 
 ### discos_final.py
 Genera discos con propiedades aleatorias para la simulación.
