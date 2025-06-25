@@ -33,6 +33,12 @@ ax.set_xlim(0, 1)
 ax.set_ylim(0, 1)
 ax.set_aspect('equal')
 
+def save_xposition(filename="x_positions.csv"): #guarda posicion en x en csv
+    x_positions = [d.position[0] for d in discos]
+    with open(filename, "a") as f:
+        line = ",".join(map(str, x_positions))
+        f.write(line + "\n")
+
 colors = [np.random.rand(3,) for _ in discos]
 patches = [plt.Circle((d.position[0], d.position[1]), d.radious, color=colors[i]) for i, d in enumerate(discos)]
 for p in patches:
@@ -58,7 +64,23 @@ def actualizar(frame):
 
     for i, d in enumerate(discos):
         patches[i].center = d.position[0], d.position[1]
+    save_xposition()
     return patches
 
 ani = animation.FuncAnimation(fig, actualizar, frames=500, interval=20, blit=True)
+plt.show()
+
+data = np.loadtxt("x_positions.csv", delimiter=",")
+
+# Flatten all x-positions across all saved frames
+all_x = data.flatten()
+
+all_x = data.flatten()
+
+# Plot global histogram
+plt.hist(all_x, bins=30, color='lightgreen', edgecolor='black')
+plt.xlabel("X Position")
+plt.ylabel("Total Count (all sampled frames)")
+plt.title("Global Histogram of X Positions")
+plt.grid(True)
 plt.show()
