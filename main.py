@@ -34,6 +34,11 @@ ax.set_ylim(0, 1)
 ax.set_aspect('equal')
 
 def save_xposition(filename="x_positions.csv"): #guarda posicion en x en csv
+    """
+    Guarda las posiciones en X de todos los discos en un archivo CSV para graficarlas después.
+    Args:
+    filename (str): Nombre del archivo donde se guardarán las posiciones.
+    """
     x_positions = [d.position[0] for d in discos]
     with open(filename, "a") as f:
         line = ",".join(map(str, x_positions))

@@ -1,7 +1,7 @@
 # Ejemplo de Uso: Simulación de Colisiones de Discos
 
 ##  Ejecución del proyecto
-Para iniciar la simulación, ejecute el archivo **main.py** en su editor de codigo de preferencia o directamente en la terminal de bash.
+Para iniciar la simulación, ejecute el archivo **main.py** en su editor de codigo de preferencia o directamente en la terminal de bash despues de visualizar la simulacion de los discos cierrela e inmediatamente se mostrará el histograma de posiciones en el eje x.
 
 Esto lanzará una simulación con parametros predeterminados mostrando:
 - Ventana con animación de discos en movimiento
@@ -15,16 +15,16 @@ En `main.py` se pueden ajustar los siguientes valores para experimentar diferent
 cantidad_discos = 50       # Valores recomendados: 5-100
 radio_disco = 0.05         # Debe ser < 0.5 por los márgenes de la caja
 dt = 0.01                  # Paso temporal 
-frames = 500               # Duración de simulación (línea 68)
+frames = 500               # Duración de simulación (línea 75)
 ```
 
 ### Ejemplo práctico:
 ```python
-cantidad_discos = 100
-radio_disco = 0.03
+cantidad_discos = 50
+radio_disco = 0.05
 ```
 **Comportamiento esperado**
 
-![Ejemplo de imagen](images/Figure_1.png)
-
+![Ejemplo de Simulacion ejecutandose](images/Figure_1.png)
+![Ejemplo Histograma Final](images/Figure_2.png)
 
