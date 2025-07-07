@@ -83,7 +83,7 @@ all_x = data.flatten()
 all_x = data.flatten()
 
 # Plot global histogram
-plt.hist(all_x, bins=30, color='lightgreen', edgecolor='black')
+plt.hist(all_x, bins=400, color='lightgreen', edgecolor='black')
 plt.xlabel("X Position")
 plt.ylabel("Total Count (all sampled frames)")
 plt.title("Global Histogram of X Positions")
